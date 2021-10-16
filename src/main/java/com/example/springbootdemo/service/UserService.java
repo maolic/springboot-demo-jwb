@@ -1,6 +1,7 @@
 package com.example.springbootdemo.service;
 
 import com.example.springbootdemo.dto.UserDTO;
+import com.example.springbootdemo.entity.UserEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +13,7 @@ import org.springframework.stereotype.Service;
 public interface UserService {
 
     Boolean checkUserLogin(UserDTO userDTO);
+
+    UserEntity getByUserId(Long id);
 
 }

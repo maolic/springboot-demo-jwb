@@ -29,4 +29,13 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public UserEntity getByUserId(Long id) {
+        UserEntity userDB = userConfig.getUser();
+        if (userDB.getId().equals(id)) {
+            return userDB;
+        }
+        return null;
+    }
 }
