@@ -79,19 +79,19 @@ public class UserEntity {
         this.remark = remark;
     }
 
-    public LocalDateTime getCreate_time() {
+    public LocalDateTime getCreateTime() {
         return create_time;
     }
 
-    public void setCreate_time(LocalDateTime create_time) {
+    public void setCreateTime(LocalDateTime create_time) {
         this.create_time = create_time;
     }
 
-    public LocalDateTime getUpdate_time() {
+    public LocalDateTime getUpdateTime() {
         return update_time;
     }
 
-    public void setUpdate_time(LocalDateTime update_time) {
+    public void setUpdateTime(LocalDateTime update_time) {
         this.update_time = update_time;
     }
 
