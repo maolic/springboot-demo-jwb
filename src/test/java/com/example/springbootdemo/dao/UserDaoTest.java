@@ -32,4 +32,30 @@ public class UserDaoTest {
         Assert.assertNotNull(allUser);
     }
 
+    @Test
+    public void getByUserName() {
+        UserEntity admin = userDao.getByUserName("admin");
+        log.info(String.valueOf(admin));
+        Assert.assertNotNull(admin);
+    }
+
+    @Test
+    public void addUser() {
+        int result = userDao.addUser("shen", "shen", 1);
+        Assert.assertEquals(1, result);
+    }
+
+    @Test
+    public void updateUserPassword() {
+        int result = userDao.updateUserPassword("admin", "password");
+        Assert.assertEquals(1, result);
+    }
+
+    @Test
+    public void findByUsername() {
+        List<UserEntity> result = userDao.findByUsername("n");
+        log.info(String.valueOf(result));
+        Assert.assertNotNull(result);
+    }
+
 }

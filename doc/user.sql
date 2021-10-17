@@ -22,3 +22,6 @@ CREATE TABLE `user` (
 #
 
 INSERT INTO `user` VALUES (1,'admin','admin',1,NULL,'2021-10-17 13:41:07','2021-10-17 13:41:07');
+
+# 对用户表添加用户名唯一键，防止重复用户名冲突
+ALTER TABLE `user` ADD UNIQUE (`username`);

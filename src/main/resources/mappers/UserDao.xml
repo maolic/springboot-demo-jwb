@@ -14,7 +14,29 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
+    <insert id="addUser">
+        INSERT INTO user(username, password, status) VALUES (#{username}, #{password}, #{status})
+    </insert>
+
+    <update id="updateUserPassword">
+        UPDATE user SET password = #{password}
+        WHERE username = #{username}
+    </update>
+
     <select id="getAll" resultType="com.example.springbootdemo.entity.UserEntity">
-        SELECT * FROM user
+        SELECT id, username, password, status, remark, create_time, update_time
+        FROM user
+    </select>
+
+    <select id="getByUserName" resultType="com.example.springbootdemo.entity.UserEntity">
+        SELECT id, username, password, status, remark, create_time, update_time
+        FROM user
+        WHERE username = #{username}
+    </select>
+
+    <select id="findByUsername" resultType="com.example.springbootdemo.entity.UserEntity">
+        SELECT id, username, password, status, remark, create_time, update_time
+        FROM user
+        WHERE username LIKE CONCAT('%',#{str},'%')
     </select>
 </mapper>
