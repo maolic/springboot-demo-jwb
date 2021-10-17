@@ -1,11 +1,14 @@
 package com.example.springbootdemo.service.impl;
 
 import com.example.springbootdemo.config.UserConfig;
+import com.example.springbootdemo.dao.UserDao;
 import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
 import com.example.springbootdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 用户 业务层实现类
@@ -17,25 +20,30 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserConfig userConfig;
+    private UserDao userDao;
 
     @Override
-    public Boolean checkUserLogin(UserDTO userDTO) {
-        // 这里应当先去数据库查询用户
-        UserEntity userDB = userConfig.getUser();
-        // 对密码进行比较
-        if (userDB.getUsername().equals(userDTO.getUsername()) && userDB.getPassword().equals(userDTO.getPassword())) {
-            return true;
-        }
-        return false;
+    public List<UserEntity> getAll() {
+        return userDao.getAll();
     }
 
     @Override
-    public UserEntity getByUserId(Long id) {
-        UserEntity userDB = userConfig.getUser();
-        if (userDB.getId().equals(id)) {
-            return userDB;
-        }
-        return null;
+    public UserEntity getByUserName(String username) {
+        return userDao.getByUserName(username);
+    }
+
+    @Override
+    public int addUser(String username, String password, Integer status) {
+        return userDao.addUser(username, password, status);
+    }
+
+    @Override
+    public int updateUserPassword(String username, String password) {
+        return userDao.updateUserPassword(username, password);
+    }
+
+    @Override
+    public List<UserEntity> findByUsername(String str) {
+        return userDao.findByUsername(str);
     }
 }

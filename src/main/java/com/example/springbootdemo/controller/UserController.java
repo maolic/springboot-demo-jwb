@@ -25,23 +25,31 @@ public class UserController {
     @GetMapping("login") // http://localhost:8080/user/login?username=admin&password=password
     public Map<String, Object> login(@RequestParam("username") String username,
                                      @RequestParam("password") String password){
-        UserDTO userDTO = new UserDTO(username, password);
         Map<String, Object> result = new HashMap<>();
-        result.put("data", userDTO);
-        if (userService.checkUserLogin(userDTO)) {
+        UserEntity userEntity = userService.getByUserName(username);
+        if (userEntity != null && userEntity.getPassword().equals(password)) {
             result.put("status", "success");
+            userEntity.setPassword(null);
+            result.put("data", userEntity);
         }else {
             result.put("status", "false");
+            result.put("data", "用户名或密码错误");
         }
         return result;
     }
 
-    @GetMapping("getByUserId/{id}") // http://localhost:8080/user/getByUserId/1
-    public Map<String, Object> getByUserId(@PathVariable("id") Long id) {
+    @PostMapping("register") // http://localhost:8080/user/register?username=admin1&password=password1
+    public Map<String, Object> register(@RequestParam("username") String username,
+                                        @RequestParam("password") String password){
         Map<String, Object> result = new HashMap<>();
-        UserEntity userEntity = userService.getByUserId(id);
-        result.put("status", "success");
-        result.put("data", userEntity);
+        if (userService.addUser(username, password, 1) > 0) {
+            result.put("status", "success");
+            result.put("data", "注册成功");
+        }else {
+            result.put("status", "false");
+            result.put("data", "注册失败");
+        }
         return result;
     }
+
 }
