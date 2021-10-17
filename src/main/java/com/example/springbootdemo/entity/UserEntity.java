@@ -1,7 +1,8 @@
 package com.example.springbootdemo.entity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import lombok.Data;
+
+import java.util.Date;
 
 /**
  * 用户实体类
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
  * @author Shen && syf0412@vip.qq.com
  * @date 2021/10/17 0:47
  */
+@Data
 public class UserEntity {
     /**
      * id
@@ -33,78 +35,10 @@ public class UserEntity {
     /**
      * 创建时间
      */
-    private LocalDateTime create_time;
+    private Date createTime;
     /**
      * 更新时间
      */
-    private LocalDateTime update_time;
+    private Date updateTime;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return create_time;
-    }
-
-    public void setCreateTime(LocalDateTime create_time) {
-        this.create_time = create_time;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return update_time;
-    }
-
-    public void setUpdateTime(LocalDateTime update_time) {
-        this.update_time = update_time;
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", status=" + status +
-                ", remark='" + remark + '\'' +
-                ", create_time=" + create_time +
-                ", update_time=" + update_time +
-                '}';
-    }
 }

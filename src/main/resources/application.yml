@@ -3,5 +3,19 @@
 server:
   port: 8080
 
+spring:
+  datasource: # 配置数据源
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbootdemo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+# mybatis相关配置
+mybatis:
+  mapper-locations: classpath:mappers/*.xml # 扫描mapper.xml文件
+  type-aliases-package: com.example.springbootdemo.entity # 对于实体类位置
+  configuration:
+    map-underscore-to-camel-case: true # mybatis驼峰配置，否则数据库中下划线无法匹配实体类中驼峰属性
+
 example:
   hello: Hello World!
