@@ -1,8 +1,6 @@
 package com.example.springbootdemo.service;
 
-import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

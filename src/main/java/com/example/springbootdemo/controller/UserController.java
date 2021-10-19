@@ -52,4 +52,26 @@ public class UserController {
         return result;
     }
 
+    @PostMapping("modifyPassword")
+    public Map<String, Object> modifyPassword(@RequestParam("username") String username,
+                                              @RequestParam("password") String password) {
+        Map<String, Object> result = new HashMap<>();
+        if (userService.updateUserPassword(username, password) > 0) {
+            result.put("status", "success");
+            result.put("data", "修改成功");
+        }else {
+            result.put("status", "false");
+            result.put("data", "修改失败");
+        }
+        return result;
+    }
+
+    // 根据用户名模糊查询
+    @GetMapping("findByUsername")
+    public Map<String, Object> findByUsername(@RequestParam("username") String username) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("users", userService.findByUsername(username));
+        return result;
+    }
+
 }
