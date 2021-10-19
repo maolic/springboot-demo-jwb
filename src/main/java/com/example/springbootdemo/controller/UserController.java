@@ -3,6 +3,7 @@ package com.example.springbootdemo.controller;
 import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
 import com.example.springbootdemo.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.Map;
  * @author Shen && syf0412@vip.qq.com
  * @date 2021/10/17 0:53
  */
+@Slf4j
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -34,6 +36,9 @@ public class UserController {
         }else {
             result.put("status", "false");
             result.put("data", "用户名或密码错误");
+            log.info("【登录异常】用户名{}", username);
+            log.warn("【登录异常】用户名{}", username);
+            log.error("【登录异常】用户名{}", username);
         }
         return result;
     }
