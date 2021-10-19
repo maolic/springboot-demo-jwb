@@ -1,6 +1,5 @@
 package com.example.springbootdemo.controller;
 
-import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
 import com.example.springbootdemo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
