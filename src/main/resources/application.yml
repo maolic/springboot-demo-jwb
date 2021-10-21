@@ -16,6 +16,14 @@ mybatis:
   type-aliases-package: com.example.springbootdemo.entity # 对于实体类位置
   configuration:
     map-underscore-to-camel-case: true # mybatis驼峰配置，否则数据库中下划线无法匹配实体类中驼峰属性
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 配置mybatis打印SQL日志
+
+logging:
+  level:
+    com:
+      example:
+        springbootdemo:
+          dao: trace
 
 example:
   hello: Hello World!

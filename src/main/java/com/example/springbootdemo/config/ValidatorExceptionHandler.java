@@ -2,6 +2,7 @@ package com.example.springbootdemo.config;
 
 import com.example.springbootdemo.dto.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,5 +22,13 @@ public class ValidatorExceptionHandler {
         log.error(e.getMessage());
         return new Result<>().error(e.getMessage());
 //        return new Result<>().error("请求参数异常");
+    }
+
+    @ExceptionHandler(value = DuplicateKeyException.class)
+    @ResponseBody
+    public Result<Object> duplicateKeyException(DuplicateKeyException e) {
+        log.error(e.getMessage());
+//        return new Result<>().error(e.getMessage());
+        return new Result<>().error("用户名重复，注册失败");
     }
 }

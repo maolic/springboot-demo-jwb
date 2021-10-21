@@ -42,13 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(String username, String password, Integer status) {
-        int result = 0;
-        try {
-            result = userDao.addUser(username, password, status);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+        return userDao.addUser(username, password, status);
     }
 
     @Override
