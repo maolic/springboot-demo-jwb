@@ -4,6 +4,7 @@ import com.example.springbootdemo.dto.Result;
 import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
 import com.example.springbootdemo.service.UserService;
+import com.example.springbootdemo.uitl.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("login") // http://localhost:8080/user/login?username=admin&password=password
+    @PostMapping("login") // http://localhost:8080/user/login?username=admin&password=password
     public Result<Object> login(@RequestParam("username") String username,
                                 @RequestParam("password") String password){
+
+        ValidatorUtil.require(username, "用户名");
+        ValidatorUtil.require(password, "密码");
+
         UserDTO userDTO = userService.getByUserName(username);
         if (userDTO != null && userDTO.getPassword().equals(password)) {
             return new Result<>().ok();
