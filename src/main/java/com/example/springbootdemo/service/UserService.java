@@ -1,5 +1,6 @@
 package com.example.springbootdemo.service;
 
+import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public interface UserService {
      * @param username 用户名
      * @return 用户
      */
-    UserEntity getByUserName(String username);
+    UserDTO getByUserName(String username);
 
     /**
      * 新增用户

@@ -1,10 +1,11 @@
 package com.example.springbootdemo.service.impl;
 
-import com.example.springbootdemo.config.UserConfig;
 import com.example.springbootdemo.dao.UserDao;
 import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
 import com.example.springbootdemo.service.UserService;
+import lombok.SneakyThrows;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getByUserName(String username) {
-        return userDao.getByUserName(username);
+    public UserDTO getByUserName(String username) {
+        UserEntity userEntity = userDao.getByUserName(username);
+        if (userEntity == null) {
+            return null;
+        }else {
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(userEntity, userDTO);
+            return userDTO;
+        }
     }
 
     @Override
