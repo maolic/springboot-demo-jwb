@@ -25,4 +25,5 @@ public interface TodolistDao {
 
     List<TodolistEntity> like(String text);
 
+    List<TodolistEntity> all();
 }

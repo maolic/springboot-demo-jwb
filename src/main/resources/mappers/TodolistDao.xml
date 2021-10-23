@@ -31,4 +31,8 @@
         SELECT id, text FROM todolist
         WHERE text LIKE CONCAT('%',#{text},'%')
     </select>
+
+    <select id="all" resultType="com.example.springbootdemo.entity.TodolistEntity">
+        SELECT id, text FROM todolist
+    </select>
 </mapper>
