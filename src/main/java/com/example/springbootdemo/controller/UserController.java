@@ -6,6 +6,8 @@ import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
 import com.example.springbootdemo.enums.ExceptionEnum;
 import com.example.springbootdemo.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
@@ -21,6 +23,7 @@ import java.util.Map;
  * @author Shen && syf0412@vip.qq.com
  * @date 2021/10/17 0:53
  */
+@Api("用户")
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -32,6 +35,7 @@ public class UserController {
      * 获取用户list
      * http://localhost:8080/user/list
      */
+    @ApiOperation("查询用户分页")
     @GetMapping("list")
     public Result<PageDTO<UserEntity>> list(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                                              @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit) {
@@ -43,6 +47,7 @@ public class UserController {
      * 登录
      * http://localhost:8080/user/login?username=admin&password=password
      */
+    @ApiOperation("登录")
     @PostMapping("login")
     public Result<Object> login(@Valid @RequestBody UserDTO userDTO){
         UserEntity user = userService.login(userDTO);
@@ -56,6 +61,7 @@ public class UserController {
      * 注册
      * http://localhost:8080/user/register?username=admin1&password=password1
      */
+    @ApiOperation("注册")
     @PostMapping("register")
     public Result<Object> register(@Valid @RequestBody UserDTO userDTO){
         if (ObjectUtils.isEmpty(userService.getByUserName(userDTO.getUsername()))) {
@@ -66,6 +72,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation("修改密码")
     @PostMapping("modifyPassword")
     public Result<Object> modifyPassword(@Valid @RequestBody UserDTO userDTO) {
         if (userService.updateUserPassword(userDTO.getUsername(), DigestUtils.md5DigestAsHex(userDTO.getPassword().getBytes())) > 0) {
@@ -74,7 +81,7 @@ public class UserController {
         return new Result<>().error("请检查提交信息");
     }
 
-    // 根据用户名模糊查询
+    @ApiOperation("根据用户名模糊查询")
     @GetMapping("findByUsername")
     public Result<Object> findByUsername(@RequestParam("username") String username) {
         return new Result<>().ok(userService.findByUsername(username));
