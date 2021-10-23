@@ -1,12 +1,16 @@
 package com.example.springbootdemo.service.impl;
 
-import com.example.springbootdemo.config.UserConfig;
 import com.example.springbootdemo.dao.UserDao;
+import com.example.springbootdemo.dto.PageDTO;
 import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
 import com.example.springbootdemo.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -23,8 +27,20 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public List<UserEntity> getAll() {
-        return userDao.getAll();
+    public PageDTO<UserEntity> getUserPage(Integer page, Integer limit) {
+        PageHelper.startPage(page, limit);
+        List<UserEntity> userList = userDao.getAll();
+        PageInfo<UserEntity> pageInfo = new PageInfo<>(userList);
+        return new PageDTO<>(page, limit, pageInfo.getTotal(), userList);
+    }
+
+    @Override
+    public UserEntity login(UserDTO userDTO) {
+        UserEntity userEntity = this.getByUserName(userDTO.getUsername());
+        if (!ObjectUtils.isEmpty(userEntity) && userEntity.getPassword().equals(DigestUtils.md5DigestAsHex(userDTO.getPassword().getBytes()))) {
+            return userEntity;
+        }
+        return null;
     }
 
     @Override

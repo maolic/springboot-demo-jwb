@@ -1,12 +1,14 @@
 package com.example.springbootdemo.service;
 
+import com.example.springbootdemo.dto.PageDTO;
+import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
 /**
  * 用户 业务层
- *
  * @author Shen && syf0412@vip.qq.com
  * @date 2021/10/17 1:15
  */
@@ -16,7 +18,14 @@ public interface UserService {
      * 获取所有用户
      * @return 用户列表
      */
-    List<UserEntity> getAll();
+    PageDTO<UserEntity> getUserPage(Integer page, Integer limit);
+
+    /**
+     * 登录
+     * @param userDTO 用户信息
+     * @return 用户
+     */
+    UserEntity login(UserDTO userDTO);
 
     /**
      * 根据用户名查询

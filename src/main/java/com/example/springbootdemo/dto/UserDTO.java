@@ -2,6 +2,8 @@ package com.example.springbootdemo.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 用户DTO
  *
@@ -17,14 +19,12 @@ public class UserDTO {
     /**
      * 用户名
      */
+    @NotNull(message = "用户名不能为空")
     private String username;
     /**
      * 密码
      */
+    @NotNull(message = "密码不能为空")
     private String password;
 
-    public UserDTO(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 }

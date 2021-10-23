@@ -1,11 +1,17 @@
 package com.example.springbootdemo.controller;
 
+import com.example.springbootdemo.config.Result;
+import com.example.springbootdemo.dto.PageDTO;
 import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
+import com.example.springbootdemo.enums.ExceptionEnum;
 import com.example.springbootdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,56 +28,56 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("login") // http://localhost:8080/user/login?username=admin&password=password
-    public Map<String, Object> login(@RequestParam("username") String username,
-                                     @RequestParam("password") String password){
-        Map<String, Object> result = new HashMap<>();
-        UserEntity userEntity = userService.getByUserName(username);
-        if (userEntity != null && userEntity.getPassword().equals(password)) {
-            result.put("status", "success");
-            userEntity.setPassword(null);
-            result.put("data", userEntity);
-        }else {
-            result.put("status", "false");
-            result.put("data", "用户名或密码错误");
-        }
-        return result;
+    /**
+     * 获取用户list
+     * http://localhost:8080/user/list
+     */
+    @GetMapping("list")
+    public Result<PageDTO<UserEntity>> list(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit) {
+        PageDTO<UserEntity> userPage = userService.getUserPage(page, limit);
+        return new Result<PageDTO<UserEntity>>().ok(userPage);
     }
 
-    @PostMapping("register") // http://localhost:8080/user/register?username=admin1&password=password1
-    public Map<String, Object> register(@RequestParam("username") String username,
-                                        @RequestParam("password") String password){
-        Map<String, Object> result = new HashMap<>();
-        if (userService.addUser(username, password, 1) > 0) {
-            result.put("status", "success");
-            result.put("data", "注册成功");
-        }else {
-            result.put("status", "false");
-            result.put("data", "注册失败");
+    /**
+     * 登录
+     * http://localhost:8080/user/login?username=admin&password=password
+     */
+    @PostMapping("login")
+    public Result<Object> login(@Valid @RequestBody UserDTO userDTO){
+        UserEntity user = userService.login(userDTO);
+        if (!ObjectUtils.isEmpty(user)) {
+            return new Result<>().ok("登陆成功");
         }
-        return result;
+        return new Result<>().error(ExceptionEnum.LOGIN_ERROR.getMsg());
+    }
+
+    /**
+     * 注册
+     * http://localhost:8080/user/register?username=admin1&password=password1
+     */
+    @PostMapping("register")
+    public Result<Object> register(@Valid @RequestBody UserDTO userDTO){
+        if (ObjectUtils.isEmpty(userService.getByUserName(userDTO.getUsername()))) {
+            userService.addUser(userDTO.getUsername(), DigestUtils.md5DigestAsHex(userDTO.getPassword().getBytes()), 1);
+            return new Result<>().ok("注册成功");
+        }else {
+            return new Result<>().error("用户名已被注册");
+        }
     }
 
     @PostMapping("modifyPassword")
-    public Map<String, Object> modifyPassword(@RequestParam("username") String username,
-                                              @RequestParam("password") String password) {
-        Map<String, Object> result = new HashMap<>();
-        if (userService.updateUserPassword(username, password) > 0) {
-            result.put("status", "success");
-            result.put("data", "修改成功");
-        }else {
-            result.put("status", "false");
-            result.put("data", "修改失败");
+    public Result<Object> modifyPassword(@Valid @RequestBody UserDTO userDTO) {
+        if (userService.updateUserPassword(userDTO.getUsername(), DigestUtils.md5DigestAsHex(userDTO.getPassword().getBytes())) > 0) {
+            return new Result<>().ok("修改成功");
         }
-        return result;
+        return new Result<>().error("请检查提交信息");
     }
 
     // 根据用户名模糊查询
     @GetMapping("findByUsername")
-    public Map<String, Object> findByUsername(@RequestParam("username") String username) {
-        Map<String, Object> result = new HashMap<>();
-        result.put("users", userService.findByUsername(username));
-        return result;
+    public Result<Object> findByUsername(@RequestParam("username") String username) {
+        return new Result<>().ok(userService.findByUsername(username));
     }
 
 }
