@@ -19,11 +19,6 @@ import java.util.List;
 public class TodolistController {
     @Resource
     private TodolistDao todolistDao;
-    @ApiOperation("全部")
-    @GetMapping("all")
-    public Result<Object> all(){
-        return new Result<>().ok(todolistDao.all());
-    }
     @ApiOperation("增")
     @PostMapping("add")
     public Result<Object> add(@RequestParam("text") String text){
