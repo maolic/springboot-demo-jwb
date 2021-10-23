@@ -3,7 +3,6 @@ package com.example.springbootdemo.service;
 import com.example.springbootdemo.dto.PageDTO;
 import com.example.springbootdemo.dto.UserDTO;
 import com.example.springbootdemo.entity.UserEntity;
-import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 

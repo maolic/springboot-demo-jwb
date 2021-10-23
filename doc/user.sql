@@ -25,3 +25,10 @@ INSERT INTO `user` VALUES (1,'admin','admin',1,NULL,'2021-10-17 13:41:07','2021-
 
 # 对用户表添加用户名唯一键，防止重复用户名冲突
 ALTER TABLE `user` ADD UNIQUE (`username`);
+
+DROP TABLE IF EXISTS `todolist`;
+CREATE TABLE `todolist` (
+    `id` bigint(11) NOT NULL AUTO_INCREMENT,
+    `text` varchar(255) NOT NULL DEFAULT '',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

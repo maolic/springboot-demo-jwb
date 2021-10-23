@@ -14,8 +14,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 用户 控制层
@@ -23,7 +21,6 @@ import java.util.Map;
  * @author Shen && syf0412@vip.qq.com
  * @date 2021/10/17 0:53
  */
-@Api("用户")
 @RestController
 @RequestMapping("user")
 public class UserController {
